@@ -59,7 +59,7 @@
 }
 
 html {
-  color: #dfe6e9;
+  color: #e5a00d;
   background-color: #232323;
   font-size: 1.5em;
   font-family: Helvetica, Arial, sans-serif;
@@ -69,14 +69,14 @@ html {
 }
 
 a {
-  color: #dfe6e9;
+  color: #e5a00d;
   text-decoration: none;
   background-color: transparent !important;
   outline: 0;
 }
 
 a.linkSelected {
-  border-bottom: .01em solid #dfe6e9;
+  border-bottom: .01em solid #e5a00d;
 }
 
 tr {
@@ -85,6 +85,7 @@ tr {
 
 body {
   margin-left: 20px;
+  margin-top: 77px;
 }
 
 div, i {
@@ -160,7 +161,7 @@ h1 > span:hover {
 #icHolder {
   display: inline-block;
   right: 15px;
-  background-color: #e5a00d;
+  background-color: #232323;
   top: 34px;
   position: absolute;
 }
@@ -380,6 +381,18 @@ h1 > span:hover {
   z-index: 99;
   font-size: 1em !important;
 }
+
+#logo {
+  background-color: #232323;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  overflow-y: scroll;
+  z-index: 99;
+  font-size: 1em !important;
+}
+
 
 #video-dl {
   position: fixed;
