@@ -1,51 +1,36 @@
-APPNAME:
-    env_file: .env
-    image: 
-    container_name: APPNAME
-    hostname: APPNAME
-    privileged: true
-    networks:
-      - admin
-    volumes:
-      - ./config:/data
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /dev/fuse:/dev/fuse
+version: '2'
+
+services:
+  gossa-server:
+    image: docker.io/pknw1/gossa:latest
+    container_name: gossa
+    restart: always
+    read_only: true
     environment:
-      - VIRTUAL_HOST=APPNAME.admin.pknw1.co.uk
-      - VIRTUAL_PORT=9000
-      - APP_GROUP=Core
-      - APP_LOGO=https://static-00.iconduck.com/assets.00/portainer-icon-1465x2048-t155ekm0.png
-    deploy:
-      resources:
-        limits:
-          cpus: "1"
-          memory: 200M
+      - VIRTUAL_HOST=cloud.pknw1.co.uk
+      - VIRTUAL_PORT=8001
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
+    networks:
+      proxy:
+    # uncomment to set resource usage limits
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: "2"
+    #       memory: 250m
+    #       pids: 1024
+
+    volumes:
+      - /media/movies:/shared/readonly/media/movies:ro
+      - /media/tv:/shared/readonly/media/tv:ro
+      - /downloads:/shared/readonly/downloads:ro
+      - /media/uploads:/shared/uploads
+      - /dev/fuse:/dev/fuse
 
 networks:
-  dmz:
-    name: ${DMZ_NETWORK} 
-    ipam:
-      config:
-        - subnet: ${DMZ_NETWORK_SUBNET}
-          gateway: ${DMZ_NETWORK_ROUTE}
-
-  public:
-    name: public  
-    ipam:
-      config:
-        - subnet: ${PUBLIC_NETWORK_SUBNET}
-          gateway: ${PUBLIC_NETWORK_ROUTE}
-
-  secure:
-    name: secure
-    ipam:
-      config:
-        - subnet: ${SECURE_NETWORK_SUBNET}
-          gateway: ${SECURE_NETWORK_ROUTE}
-
-  admin:
-    name: admin      
-    ipam:
-      config:
-        - subnet: ${ADMIN_NETWORK_SUBNET}
-          gateway: ${ADMIN_NETWORK_ROUTE}
+  proxy:
+    external: true
